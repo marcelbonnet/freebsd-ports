@@ -1,0 +1,12 @@
+bin/sordi
+bin/sord_validate
+include/sord-0/sord/sord.h
+include/sord-0/sord/sordmm.hpp
+lib/libsord-0.so
+lib/libsord-0.so.0
+lib/libsord-0.so.0.10.4
+libdata/pkgconfig/sord-0.pc
+@dirrm include/sord-0/sord
+@dirrm include/sord-0
+man/man1/sordi.1.gz
+man/man1/sord_validate.1.gz
