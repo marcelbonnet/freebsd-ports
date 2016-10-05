@@ -1,4 +1,4 @@
-# Created by: Marcel Bonnet <ports@monovox.org>
+# Created by: Marcel Bonnet <marcelbonnet@gmail.com>
 # $FreeBSD$
 
 PORTNAME=	lv2

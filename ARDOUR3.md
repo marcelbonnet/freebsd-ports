@@ -13,7 +13,8 @@ This repo presents a FreeBSD port for Ardour 3.3,  gitfyi my old ports and final
 - textproc/serd-0
 - textproc/sord-0
 - audio/lv2 (conflicts with lv2core)
+- textproc/sratom-0
+- audio/lilv-0
 
 ## Stagefying
 
-- textproc/sratom-0
