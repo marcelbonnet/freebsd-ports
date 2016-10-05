@@ -9,7 +9,12 @@ MASTER_SITES=	http://lv2plug.in/spec/
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Extensible audio plugin interface
 
+LICENSE=        ISC
+LICENSE_FILE=   ${WRKSRC}/COPYING
+
 LIB_DEPENDS=	libsndfile.so:audio/libsndfile
+
+CONFLICTS=	lv2core-[6]\.[0-9]*
 
 USES=		waf pkgconfig python:build tar:bzip2
 USE_GNOME=	gtk20
