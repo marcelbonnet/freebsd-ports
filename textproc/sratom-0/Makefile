@@ -32,7 +32,6 @@ do-configure:
 do-build:
 	@(cd ${WRKSRC} && ${WAF_CMD} build )
 	@${REINPLACE_CMD} "s|bld.env\\['LIBDIR'\\],'pkgconfig'|bld.env\\['PREFIX'\\],'${WRKSRC}/libdata/pkgconfig'|" ${WRKSRC}/.waf-*/waflib/extras/autowaf.py
-#	@${REINPLACE_CMD} "s|bld.env\\['LIBDIR'\\],'pkgconfig'|bld.env\\['PREFIX'\\],'libdata/pkgconfig'|" ${WRKSRC}/.waf-*/waflib/extras/autowaf.py
 	@${RM} ${WRKSRC}/.waf-*/waflib/extras/autowaf.pyc
 
 do-install:
