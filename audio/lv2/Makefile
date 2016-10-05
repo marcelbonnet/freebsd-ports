@@ -10,7 +10,10 @@ MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Extensible audio plugin interface
 
 LICENSE=        ISC
+LICENSE_GROUPS= OSI
+LICENSE_NAME=   ISC License (ISC)
 LICENSE_FILE=   ${WRKSRC}/COPYING
+LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 LIB_DEPENDS=	libsndfile.so:audio/libsndfile
 
@@ -38,7 +41,7 @@ do-configure:
 	@${REINPLACE_CMD} -e 's|{LIBDIR}|{PREFIX}/libdata|' ${WRKSRC}/.waf*/waflib/TaskGen.py
 
 do-build:
-	@(cd ${WRKSRC} && ./waf build)
+	@(cd ${WRKSRC} && ${WAF_CMD} build )
 
 do-install:
 	@(cd ${WRKSRC} && ${WAF_CMD} install)
