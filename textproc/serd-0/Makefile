@@ -13,7 +13,7 @@ COMMENT=	Lightweight C library for RDF syntax
 LICENSE=        ISC
 LICENSE_GROUPS= OSI
 LICENSE_NAME=   ISC License (ISC)
-LICENSE_FILE=   ${WRKSRC}/LICENSE
+LICENSE_FILE=   ${WRKSRC}/COPYING
 LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 USES=		waf pkgconfig python:build tar:bzip2
@@ -21,9 +21,6 @@ USE_LDCONFIG=	yes
 MAKE_JOBS_SAFE=	yes
 CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
 		--prefix=${STAGEDIR}${PREFIX}
-
-post-extract:
-	${CP} ${FILESDIR}/patch-LICENSE ${WRKSRC}/LICENSE
 
 do-configure:
 	@(cd ${WRKSRC} && ${WAF_CMD} configure ${CONFIGURE_ARGS} --prefix=${STAGEDIR}${PREFIX})
