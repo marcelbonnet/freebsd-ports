@@ -1,0 +1,9 @@
+Lilv is a library to make the use of LV2 plugins as simple as
+possible for applications. Lilv is the successor to SLV2, rewritten
+to be significantly faster and have minimal dependencies.
+
+Lilv is Free Software (using an extremely liberal "MIT-style"
+license) written in C99 using Serd and Sord, and is known to work
+on GNU/Linux, Mac OS X, and Windows 7 with MingW.
+
+WWW: http://drobilla.net/software/lilv/
