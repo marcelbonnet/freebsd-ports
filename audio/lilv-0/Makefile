@@ -5,7 +5,6 @@ PORTNAME=	lilv
 PORTVERSION=	0.14.4
 CATEGORIES=	audio
 MASTER_SITES=	http://download.drobilla.net/
-
 PKGNAMESUFFIX=	-0
 
 MAINTAINER=	marcelbonnet@gmail.com
