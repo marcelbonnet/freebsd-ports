@@ -26,9 +26,6 @@ CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
 
 .include <bsd.port.pre.mk>
 
-#pre-patch:
-#	(cd ${WRKDIR} && ${MV} ${PORTNAME}-${PORTVERSION} ${DISTNAME})
-
 post-install:
 	${LN} -s ${PREFIX}/bin/ffmpeg ${STAGEDIR}${PREFIX}/bin/ffmpeg_harvid
 	${LN} -s ${PREFIX}/bin/ffprobe ${STAGEDIR}${PREFIX}/bin/ffprobe_harvid
