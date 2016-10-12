@@ -1,5 +1,6 @@
 bin/harvid
 bin/ffmpeg_harvid
 bin/ffprobe_harvid
+man/man1/harvid.1.gz
 @exec rm bin/ffmpeg_harvid
 @exec rm bin/ffprobe_harvid

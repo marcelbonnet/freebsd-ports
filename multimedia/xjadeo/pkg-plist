@@ -1,0 +1,7 @@
+bin/xjadeo
+bin/xjremote
+man/man1/qjadeo.1.gz
+man/man1/xjadeo.1.gz
+man/man1/xjinfo.1.gz
+man/man1/xjremote.1.gz
+@sample etc/xjadeorc.sample

@@ -13,12 +13,13 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 
 RUN_DEPENDS=	${LOCALBASE}/bin/ffmpeg:multimedia/ffmpeg \
 		${LOCALBASE}/bin/ffprobe:multimedia/ffmpeg
+LIB_DEPENDS=	libpng16.so:graphics/png
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	x42
 GH_PROJECT=	${PORTNAME}
 GH_TAGNAME=	${PORTVERSION}
-USES=	gmake
+USES=	gmake jpeg
 MAKE_JOBS_UNSAFE=	yes
 
 CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \

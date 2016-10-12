@@ -39,7 +39,7 @@ LIB_DEPENDS=	libjack.so:audio/jack \
 		libx264.so:multimedia/x264 \
 		libxcb.so:x11/libxcb \
 		libxvidcore.so:multimedia/xvid \
-	        liblo.so:audio/liblo
+		liblo.so:audio/liblo
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	x42
@@ -56,8 +56,13 @@ CPPFLAGS+=	-I${LOCALBASE}/include -I${LOCALBASE}/include/libavutil \
 CONFIGURE_ARGS=	--disable-alsamidi \
 		--prefix=${STAGEDIR}${PREFIX}
 
-PLIST_FILES=	bin/xjadeo bin/xjremote
+.include <bsd.port.pre.mk>
 
-#MAN1=		qjadeo.1 xjadeo.1 xjinfo.1 xjremote.1
+pre-install:
+	${CP} ${WRKSRC}/doc/xjadeorc ${STAGEDIR}${PREFIX}/etc/xjadeorc.sample
 
-.include <bsd.port.mk>
+post-install:
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/xjadeo
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/xjremote
+
+.include <bsd.port.post.mk>
