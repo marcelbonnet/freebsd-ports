@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Ardour 3
+Comment=Multitrack Digital Audio Workstation 
+Exec=ardour3
+Icon=PREFIX/share/PORTNAME/icons/ardour_icon_48px.png
+Terminal=false
+Type=Application
+X-MultipleArgs=false
+Categories=GTK;Audio;AudioVideoEditing;AudioVideo;Video;
