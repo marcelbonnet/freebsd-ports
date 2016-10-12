@@ -1,0 +1,10 @@
+Xjadeo is a software video player that displays a video-clip in sync with an
+ external time source (MTC, LTC, JACK-transport).
+Xjadeo is useful in soundtrack composition, video monitoring or any task tha
+t requires to synchronizing movie frames with audio events.
+Xjadeo supports a multitude of video file formats, display libraries and syn
+c sources. It includes an optional GUI called qjadeo that provides setup opt
+ions, file history, video import/transcoding and control of Xjadeo's run-tim
+e parameters.
+
+WWW: http://xjadeo.sourceforge.net/
