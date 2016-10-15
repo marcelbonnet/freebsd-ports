@@ -1,6 +1,6 @@
 # Back to 2013: Ardour 3.3 port
 
-This repo presents a FreeBSD port for Ardour 3.3,  gitfyi my old ports and finally stage them all.
+This repo presents a FreeBSD port for Ardour 3.3,  gitfy my old ports and finally stage them all.
 
 ## Roadmap
 
@@ -85,6 +85,7 @@ qsynth-0.4.1
 qsampler-0.4.0
 qjackctl-0.4.2
 aubio-0.4.2_1
+   textproc/txt2man (aubio +OPT FFMPEG)
 
 Message from qsynth-0.4.1:
 ===>   NOTICE:

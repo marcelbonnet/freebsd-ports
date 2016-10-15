@@ -1,0 +1,168 @@
+diff --git a/gtk2_ardour/audio_clock.cc b/gtk2_ardour/audio_clock.cc
+index 12d3a16..87e1739 100644
+--- a/gtk2_ardour/audio_clock.cc
++++ b/gtk2_ardour/audio_clock.cc
+@@ -1952,7 +1952,7 @@ AudioClock::frames_from_timecode_string (const string& str) const
+ 		error << string_compose (_("programming error: %1 %2"), "badly formatted timecode clock string", str) << endmsg;
+ 		return 0;
+ 	}
+-	TC.hours = abs(hours);
++	TC.hours = fabs(hours);
+ 	TC.rate = _session->timecode_frames_per_second();
+ 	TC.drop= _session->timecode_drop_frames();
+ 
+diff --git a/gtk2_ardour/editor_drag.cc b/gtk2_ardour/editor_drag.cc
+index 8f99226..9f84676 100644
+--- a/gtk2_ardour/editor_drag.cc
++++ b/gtk2_ardour/editor_drag.cc
+@@ -1648,7 +1648,7 @@ VideoTimeLineDrag::start_grab (GdkEvent* event, Gdk::Cursor*)
+ 
+ 	char buf[128];
+ 	Timecode::Time timecode;
+-	_editor->session()->sample_to_timecode(abs(_startdrag_video_offset), timecode, true /* use_offset */, false /* use_subframes */ );
++	_editor->session()->sample_to_timecode(fabs(_startdrag_video_offset), timecode, true /* use_offset */, false /* use_subframes */ );
+ 	snprintf (buf, sizeof (buf), "Video Start:\n%c%02" PRId32 ":%02" PRId32 ":%02" PRId32 ":%02" PRId32, (_startdrag_video_offset<0?'-':' '), timecode.hours, timecode.minutes, timecode.seconds, timecode.frames);
+ 	_editor->verbose_cursor()->set(buf, event->button.x + 10, event->button.y + 10);
+ 	_editor->verbose_cursor()->show ();
+@@ -1692,8 +1692,8 @@ VideoTimeLineDrag::motion (GdkEvent* event, bool first_move)
+ 	Timecode::Time timecode;
+ 	Timecode::Time timediff;
+ 	char buf[128];
+-	_editor->session()->sample_to_timecode(abs(offset), timecode, true /* use_offset */, false /* use_subframes */ );
+-	_editor->session()->sample_to_timecode(abs(dt), timediff, false /* use_offset */, false /* use_subframes */ );
++	_editor->session()->sample_to_timecode(fabs(offset), timecode, true /* use_offset */, false /* use_subframes */ );
++	_editor->session()->sample_to_timecode(fabs(dt), timediff, false /* use_offset */, false /* use_subframes */ );
+ 	snprintf (buf, sizeof (buf),
+ 			"%s\n%c%02" PRId32 ":%02" PRId32 ":%02" PRId32 ":%02" PRId32
+ 			"\n%s\n%c%02" PRId32 ":%02" PRId32 ":%02" PRId32 ":%02" PRId32
+diff --git a/gtk2_ardour/video_timeline.cc b/gtk2_ardour/video_timeline.cc
+index 8f68174..b964291 100644
+--- a/gtk2_ardour/video_timeline.cc
++++ b/gtk2_ardour/video_timeline.cc
+@@ -260,7 +260,7 @@ VideoTimeLine::get_video_frame (framepos_t vfn, int cut, int rightend)
+ 	if (vfn==0) cut=0;
+ 	for (VideoFrames::iterator i = video_frames.begin(); i != video_frames.end(); ++i) {
+ 		VideoImageFrame *frame = (*i);
+-		if (abs(frame->get_video_frame_number()-vfn)<=cut
++		if (fabs(frame->get_video_frame_number()-vfn)<=cut
+ 		    && frame->get_rightend() == rightend) { return frame; }
+ 	}
+ 	return 0;
+diff --git a/libs/ardour/ltc_slave.cc b/libs/ardour/ltc_slave.cc
+index 8d08fd6..d0bc499 100644
+--- a/libs/ardour/ltc_slave.cc
++++ b/libs/ardour/ltc_slave.cc
+@@ -476,7 +476,7 @@ LTC_Slave::speed_and_position (double& speed, framepos_t& pos)
+ 		delayedlocked = 0;
+ 	}
+ 
+-	if (abs(now - last_timestamp) > FLYWHEEL_TIMEOUT) {
++	if (fabs(now - last_timestamp) > FLYWHEEL_TIMEOUT) {
+ 		DEBUG_TRACE (DEBUG::LTC, "flywheel timeout\n");
+ 		reset();
+ 		speed = 0;
+@@ -591,7 +591,7 @@ LTC_Slave::approximate_current_delta() const
+ 		snprintf(delta, sizeof(delta), _("flywheel"));
+ 	} else {
+ 		snprintf(delta, sizeof(delta), "\u0394<span foreground=\"green\" face=\"monospace\" >%s%s%" PRIi64 "</span>sm",
+-				LEADINGZERO(abs(current_delta)), PLUSMINUS(-current_delta), abs(current_delta));
++				LEADINGZERO(fabs(current_delta)), PLUSMINUS(-current_delta), fabs(current_delta));
+ 	}
+ 	return std::string(delta);
+ }
+diff --git a/libs/ardour/midi_clock_slave.cc b/libs/ardour/midi_clock_slave.cc
+index 6f54d17..dd8fdde 100644
+--- a/libs/ardour/midi_clock_slave.cc
++++ b/libs/ardour/midi_clock_slave.cc
+@@ -364,7 +364,7 @@ MIDIClock_Slave::approximate_current_delta() const
+ 		snprintf(delta, sizeof(delta), "\u2012\u2012\u2012\u2012");
+ 	} else {
+ 		snprintf(delta, sizeof(delta), "\u0394<span foreground=\"green\" face=\"monospace\" >%s%s%" PRIi64 "</span>sm",
+-				LEADINGZERO(abs(current_delta)), PLUSMINUS(-current_delta), abs(current_delta));
++				LEADINGZERO(fabs(current_delta)), PLUSMINUS(-current_delta), fabs(current_delta));
+ 	}
+ 	return std::string(delta);
+ }
+diff --git a/libs/ardour/mtc_slave.cc b/libs/ardour/mtc_slave.cc
+index 8ce0722..db19a05 100644
+--- a/libs/ardour/mtc_slave.cc
++++ b/libs/ardour/mtc_slave.cc
+@@ -706,7 +706,7 @@ MTC_Slave::approximate_current_delta() const
+ 		snprintf(delta, sizeof(delta), "\u2012\u2012\u2012\u2012");
+ 	} else {
+ 		snprintf(delta, sizeof(delta), "\u0394<span foreground=\"green\" face=\"monospace\" >%s%s%" PRIi64 "</span>sm",
+-				LEADINGZERO(abs(current_delta)), PLUSMINUS(-current_delta), abs(current_delta));
++				LEADINGZERO(fabs(current_delta)), PLUSMINUS(-current_delta), fabs(current_delta));
+ 	}
+ 	return std::string(delta);
+ }
+diff --git a/libs/ardour/pi_controller.cc b/libs/ardour/pi_controller.cc
+index a165aa9..ca50a1c 100644
+--- a/libs/ardour/pi_controller.cc
++++ b/libs/ardour/pi_controller.cc
+@@ -170,7 +170,7 @@ PIChaser::get_ratio(framepos_t chasetime_measured, framepos_t chasetime, framepo
+ 		speed = fine;
+ 	    }
+ 
+-	    if (abs(chasetime-slavetime) > pos_threshold) {
++	    if (fabs(chasetime-slavetime) > pos_threshold) {
+ 		pic->reset( crude );
+ 		speed = crude;
+ 		want_locate_val = chasetime;
+diff --git a/libs/ardour/session_ltc.cc b/libs/ardour/session_ltc.cc
+index f293970..450e2c1 100644
+--- a/libs/ardour/session_ltc.cc
++++ b/libs/ardour/session_ltc.cc
+@@ -333,7 +333,7 @@ Session::ltc_tx_send_time_code_for_cycle (framepos_t start_frame, framepos_t end
+ 
+ 		double bufrspdiff = rint(newbuflen - oldbuflen);
+ 
+-		if (abs(bufrspdiff) > newbuflen || abs(bufrspdiff) > oldbuflen) {
++		if (fabs(bufrspdiff) > newbuflen || fabs(bufrspdiff) > oldbuflen) {
+ 			DEBUG_TRACE (DEBUG::LTC, "LTC TX2: resampling buffer would destroy information.\n");
+ 			ltc_tx_reset();
+ 			poff = 0;
+diff --git a/libs/ardour/session_process.cc b/libs/ardour/session_process.cc
+index cecbd88..d2df722 100644
+--- a/libs/ardour/session_process.cc
++++ b/libs/ardour/session_process.cc
+@@ -396,7 +396,7 @@ Session::process_with_events (pframes_t nframes)
+ 			if (this_event && this_event->action_frame <= end_frame && this_event->action_frame >= _transport_frame) {
+ 				/* this isn't quite right for reverse play */
+ 				frames_moved = (framecnt_t) (this_event->action_frame - _transport_frame);
+-				this_nframes = abs (floor(frames_moved / _transport_speed));
++				this_nframes = fabs (floor(frames_moved / _transport_speed));
+ 			}
+ 
+ 			if (this_nframes) {
+@@ -587,7 +587,7 @@ Session::follow_slave (pframes_t nframes)
+ 			}
+ 
+ #if 1
+-			if (!actively_recording() && (framecnt_t) abs(average_slave_delta) > _slave->resolution()) {
++			if (!actively_recording() && (framecnt_t) fabs(average_slave_delta) > _slave->resolution()) {
+ 				cerr << "average slave delta greater than slave resolution (" << _slave->resolution() << "), going to silent motion\n";
+ 				goto silent_motion;
+ 			}
+@@ -632,7 +632,7 @@ Session::calculate_moving_average_of_slave_delta (int dir, framecnt_t this_delta
+ 		average_slave_delta /= (int32_t) delta_accumulator_size;
+ 		if (average_slave_delta < 0L) {
+ 			average_dir = -1;
+-			average_slave_delta = abs(average_slave_delta);
++			average_slave_delta = fabs(average_slave_delta);
+ 		} else {
+ 			average_dir = 1;
+ 		}
+diff --git a/libs/midi++2/midi++/ipmidi_port.h b/libs/midi++2/midi++/ipmidi_port.h
+index c077170..11bf9b8 100644
+--- a/libs/midi++2/midi++/ipmidi_port.h
++++ b/libs/midi++2/midi++/ipmidi_port.h
+@@ -23,7 +23,7 @@
+ #include <iostream>
+ #if defined(WIN32)
+ #include <winsock.h>
+-#elif defined(__FREE_BSD__)
++#elif defined(__FreeBSD__)
+ #include <netinet/in.h>
+ #include <sys/socket.h>
+ #include <sys/_sockaddr_storage.h>

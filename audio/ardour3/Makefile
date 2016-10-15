@@ -27,10 +27,10 @@ BUILD_DEPENDS=	lv2>0:audio/lv2
 RUN_DEPENDS=	${LOCALBASE}/include/boost/version.hpp:devel/boost-libs \
 		lv2>0:audio/lv2
 
-USES=		waf pkgconfig python:build tar:bzip2
-USE_GETTEXT=	yes
+USES=		waf pkgconfig python:build tar:bzip2 gettext
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
+USE_GCC= yes
 MAKE_JOBS_SAFE=	yes
 PATCH_STRIP=	-p1
 CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
