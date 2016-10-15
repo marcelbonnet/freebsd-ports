@@ -1,8 +1,8 @@
 # Created by: Marcel Bonnet <marcelbonnet@gmail.com>
 # $FreeBSD$
 
-PORTNAME=	ardour3
-PORTVERSION=	3.3
+PORTNAME=	ardour5
+PORTVERSION=	5.3
 CATEGORIES=	audio
 MASTER_SITES=	http://github.com/marcelbonnet/freebsd/ports/distfiles/
 
@@ -83,14 +83,17 @@ USES+=			gettext
 
 CFLAGS:=	${CFLAGS:N-fno-strict-aliasing}
 
+post-extract:
+	${MV} ${WRKDIR}/ardour ${WRKDIR}/${PKGNAME}
+
 post-patch:
 	${CP} ${FILESDIR}/revision.cc ${WRKSRC}/libs/ardour
 	${REINPLACE_CMD} "s|VERSAO|${PORTVERSION}|" ${WRKSRC}/libs/ardour/revision.cc
-	${MV} ${WRKSRC}/wscript ${WRKSRC}/wscript.orig-${PORTVERSION}
-	${CP} ${WRKSRC}/../freebsd/wscript-freebsd ${WRKSRC}/wscript
-	${REINPLACE_CMD} "s|_FBSD_MAJOR_|${PORTVERSION:C/([0-9])\.([0-9])/\1/}|" ${WRKSRC}/wscript
-	${REINPLACE_CMD} "s|_FBSD_MINOR_|${PORTVERSION:C/([0-9])\.([0-9])/\2/}|" ${WRKSRC}/wscript
-	${REINPLACE_CMD} "s|_FBSD_REVISION_|${PORTREVISION}|" ${WRKSRC}/wscript
+#	${MV} ${WRKSRC}/wscript ${WRKSRC}/wscript.orig-${PORTVERSION}
+#	${CP} ${WRKSRC}/../freebsd/wscript-freebsd ${WRKSRC}/wscript
+#	${REINPLACE_CMD} "s|_FBSD_MAJOR_|${PORTVERSION:C/([0-9])\.([0-9])/\1/}|" ${WRKSRC}/wscript
+#	${REINPLACE_CMD} "s|_FBSD_MINOR_|${PORTVERSION:C/([0-9])\.([0-9])/\2/}|" ${WRKSRC}/wscript
+#	${REINPLACE_CMD} "s|_FBSD_REVISION_|${PORTREVISION}|" ${WRKSRC}/wscript
 
 do-configure:
 	(cd ${WRKSRC} && ${CONFIGURE_ENV} ${WAF_CMD} configure ${CONFIGURE_ARGS})
