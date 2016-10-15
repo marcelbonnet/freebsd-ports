@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Ardour 3
+Name=Ardour BSD
 Comment=Multitrack Digital Audio Workstation 
-Exec=ardour3
+Exec=ardour5
 Icon=PREFIX/share/PORTNAME/icons/ardour_icon_48px.png
 Terminal=false
 Type=Application

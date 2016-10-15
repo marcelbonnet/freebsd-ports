@@ -1,10 +1,19 @@
-# Back to 2013: Ardour 3.3 port
+# Ardour 5.3 FreeBSD Port
 
-This repo presents a FreeBSD port for Ardour 3.3,  gitfy my old ports and finally stage them all.
+Doing...
 
-## Roadmap
+Updating this file from ardour 3.3 port ...
 
-- Update Ardour and all these new libs
+Please, check it later.
+
+## My Ardour 3.3 Port
+
+I did a lot of work , staged the old ports but, some things happened wrong:
+
+- a lot of new compiler erros (code style)
+- aubio new version (compared to the year 2013) need some changes in header files... 
+
+So, I'm trying to port 5.3 .
 
 # New Lib Depends
 
@@ -51,6 +60,8 @@ Ordered by build dependency:
 
 ## History
 
+First port: Ardour 3.3 , july/2013.
+
 I gave up for a while... many things were going around those years, but I'm back.
 
 Here some references (I like to keep 'em for myself), but may interest:
@@ -86,6 +97,7 @@ qsampler-0.4.0
 qjackctl-0.4.2
 aubio-0.4.2_1
    textproc/txt2man (aubio +OPT FFMPEG)
+audio/rubberband
 
 Message from qsynth-0.4.1:
 ===>   NOTICE:

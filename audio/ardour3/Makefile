@@ -4,7 +4,7 @@
 PORTNAME=	ardour5
 PORTVERSION=	5.3
 CATEGORIES=	audio
-MASTER_SITES=	http://github.com/marcelbonnet/freebsd/ports/distfiles/
+MASTER_SITES=	http://github.com/marcelbonnet/ardour/ports/distfiles/
 
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Multitrack digital audio workstation
@@ -12,7 +12,8 @@ COMMENT=	Multitrack digital audio workstation
 LICENSE=		GPLv2
 LICENSE_FILE=	${WRKSRC}/COPYING
 
-LIB_DEPENDS=	libaubio.so:audio/aubio \
+LIB_DEPENDS=	librubberband.so.2:audio/rubberband \
+		libaubio.so:audio/aubio \
 		liblrdf.so:textproc/liblrdf \
 		libsamplerate.so:audio/libsamplerate \
 		liblilv-0.so:audio/lilv-0 \
@@ -91,9 +92,9 @@ post-patch:
 	${REINPLACE_CMD} "s|VERSAO|${PORTVERSION}|" ${WRKSRC}/libs/ardour/revision.cc
 #	${MV} ${WRKSRC}/wscript ${WRKSRC}/wscript.orig-${PORTVERSION}
 #	${CP} ${WRKSRC}/../freebsd/wscript-freebsd ${WRKSRC}/wscript
-#	${REINPLACE_CMD} "s|_FBSD_MAJOR_|${PORTVERSION:C/([0-9])\.([0-9])/\1/}|" ${WRKSRC}/wscript
-#	${REINPLACE_CMD} "s|_FBSD_MINOR_|${PORTVERSION:C/([0-9])\.([0-9])/\2/}|" ${WRKSRC}/wscript
-#	${REINPLACE_CMD} "s|_FBSD_REVISION_|${PORTREVISION}|" ${WRKSRC}/wscript
+	${REINPLACE_CMD} "s|_FBSD_MAJOR_|${PORTVERSION:C/([0-9])\.([0-9])/\1/}|" ${WRKSRC}/wscript
+	${REINPLACE_CMD} "s|_FBSD_MINOR_|${PORTVERSION:C/([0-9])\.([0-9])/\2/}|" ${WRKSRC}/wscript
+	${REINPLACE_CMD} "s|_FBSD_REVISION_|${PORTREVISION}|" ${WRKSRC}/wscript
 
 do-configure:
 	(cd ${WRKSRC} && ${CONFIGURE_ENV} ${WAF_CMD} configure ${CONFIGURE_ARGS})
