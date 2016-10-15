@@ -1,8 +1,22 @@
-# Ardour 5.3 FreeBSD Port
+# Ardour BSD
+
+This port, named `ardour-bsd`, is a fork from Ardour. 
+
+My goal is:
+
+- provide the last possible. portable and maintainable port of Ardour
+- not to remove the old and stable port of Ardour audio/ardour
+   - yes, it is an old one (version 2), but is quite stable, fast and still a good piece of software
+   - it is not a stale port, it stil compiling from source
+
+## Ardour BSD: is now 5.3
 
 Doing...
 
-Updating this file from ardour 3.3 port ...
+   - wscript patches ... OK
+   - make configure ... OK
+
+Updating this markdown file from ardour 3.3 port ...
 
 Please, check it later.
 

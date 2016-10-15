@@ -1,13 +1,12 @@
 # Created by: Marcel Bonnet <marcelbonnet@gmail.com>
 # $FreeBSD$
 
-PORTNAME=	ardour5
+PORTNAME=	ardour-bsd
 PORTVERSION=	5.3
 CATEGORIES=	audio
-MASTER_SITES=	http://github.com/marcelbonnet/ardour/ports/distfiles/
 
 MAINTAINER=	marcelbonnet@gmail.com
-COMMENT=	Multitrack digital audio workstation
+COMMENT=	Multitrack audio recording and editing
 
 LICENSE=		GPLv2
 LICENSE_FILE=	${WRKSRC}/COPYING
@@ -28,6 +27,10 @@ BUILD_DEPENDS=	lv2>0:audio/lv2
 RUN_DEPENDS=	${LOCALBASE}/include/boost/version.hpp:devel/boost-libs \
 		lv2>0:audio/lv2
 
+USE_GITHUB=	yes
+GH_ACCOUNT=	marcelbonnet
+GH_PROJECT=	ardour
+GH_TAGNAME=	bsd-${PORTVERSION}
 USES=		waf pkgconfig python:build tar:bzip2 gettext
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
