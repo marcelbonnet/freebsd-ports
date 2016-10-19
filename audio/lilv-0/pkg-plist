@@ -7,7 +7,7 @@ include/lilv-0/lilv/lilv.h
 include/lilv-0/lilv/lilvmm.hpp
 lib/liblilv-0.so
 lib/liblilv-0.so.0
-lib/liblilv-0.so.0.14.4
+lib/liblilv-0.so.0.16.0
 libdata/pkgconfig/lilv-0.pc
 @dirrm include/lilv-0/lilv
 @dirrm include/lilv-0

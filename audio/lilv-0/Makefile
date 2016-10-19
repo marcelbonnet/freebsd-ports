@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	lilv
-PORTVERSION=	0.14.4
+PORTVERSION=	0.16.0
 CATEGORIES=	audio
 MASTER_SITES=	http://download.drobilla.net/
 PKGNAMESUFFIX=	-0
@@ -48,6 +48,6 @@ do-install:
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/lilv-bench
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/lv2info
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/lv2ls
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/liblilv-0.so.0.14.4
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/liblilv-0.so.0.16.0
 
 .include <bsd.port.mk>
