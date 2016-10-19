@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	sord
-PORTVERSION=	0.10.4
+PORTVERSION=	0.12.2
 CATEGORIES=	textproc
 MASTER_SITES=	http://download.drobilla.net/
 PKGNAMESUFFIX=	-0
@@ -41,6 +41,6 @@ do-install:
 	@(cd ${WRKSRC} && ${WAF_CMD} install)
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/sordi
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/sord_validate
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libsord-0.so.0.10.4
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libsord-0.so.0.12.2
 
 .include <bsd.port.mk>
