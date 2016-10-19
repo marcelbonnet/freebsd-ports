@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	lv2
-PORTVERSION=	1.2.0
+PORTVERSION=	1.14.0
 CATEGORIES=	audio
 MASTER_SITES=	http://lv2plug.in/spec/
 
@@ -15,12 +15,14 @@ LICENSE_NAME=   ISC License (ISC)
 LICENSE_FILE=   ${WRKSRC}/COPYING
 LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
-LIB_DEPENDS=	libsndfile.so:audio/libsndfile
+LIB_DEPENDS=	libsndfile.so:audio/libsndfile \
+		libfontconfig.so:x11-fonts/fontconfig \
+		libfreetype.so:print/freetype2
 
 CONFLICTS=	lv2core-[6]\.[0-9]*
 
-USES=		waf pkgconfig python:build tar:bzip2
-USE_GNOME=	gtk20
+USES=		waf pkgconfig python:build tar:bzip2 gettext-runtime
+USE_GNOME=	gtk20 cairo gdkpixbuf2
 USE_LDCONFIG=	yes
 MAKE_JOBS_SAFE=	yes
 CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
@@ -58,8 +60,13 @@ do-install:
 #	this file is created by the upstream installer in the wrong place:
 	${RM} ${STAGEDIR}${PREFIX}/lib/pkgconfig/lv2core.pc
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-amp.lv2/amp.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-fifths.lv2/fifths.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-metro.lv2/metro.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-midigate.lv2/midigate.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-params.lv2/params.so
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-sampler.lv2/sampler.so
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-sampler.lv2/sampler_ui.so
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-synth.lv2/synth.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-scope.lv2/examploscope.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/lv2/eg-scope.lv2/examploscope_ui.so
 
 .include <bsd.port.post.mk>
