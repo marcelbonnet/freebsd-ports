@@ -1,6 +1,6 @@
 # Ardour BSD
 
-This port, named `ardour-bsd`, is a fork from Ardour. 
+This port, named `ardour-devel`, is a fork from Ardour. 
 
 My goal is:
 
