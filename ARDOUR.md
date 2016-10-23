@@ -11,10 +11,29 @@ My goal is:
 
 ## Ardour BSD: is now 5.3
 
-Doing...
+*IT WORKS!*
 
-   - wscript patches ... OK
-   - make configure ... OK
+port status: 
+   - dependencies OK
+      - missing final tests
+   - ardour-devel (ardour 5.3)
+      - configure OK
+      - compile OK
+      - stage FAILS
+      - install TODO
+
+### Manual Installation:
+
+After run ```make``` , it will break during stage. After that:
+
+# cd ${WRKDIR}/stage/usr/local
+# find . | cpio -pdmv /usr/local/
+
+#### Manual deinstallation:
+
+# find . | sed -e 's,^\./,/usr/local/,g' | xargs rm
+
+
 
 Updating this markdown file from ardour 3.3 port ...
 
