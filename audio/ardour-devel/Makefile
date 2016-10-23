@@ -35,7 +35,6 @@ GH_TAGNAME=	devel-${PORTVERSION}
 USES=		waf pkgconfig python:build tar:bzip2 gettext
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
-USE_GCC= yes
 MAKE_JOBS_SAFE=	yes
 PATCH_STRIP=	-p1
 CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
@@ -46,8 +45,8 @@ CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
 LDFLAGS+=	-L${LOCALBASE}/lib -lexecinfo
 
 PLIST_SUB=	DISTVERSION=${DISTVERSION}
-CFLAGS+=	-I${LOCALBASE}/include
-CXXFLAGS+=	-I${LOCALBASE}/include
+CFLAGS+=	-I${LOCALBASE}/include -I/usr/include
+CXXFLAGS+=	-I${LOCALBASE}/include -I/usr/include
 CONFIGURE_ENV+=	CC=${CC} CXX=${CXX} \
 		LINKFLAGS="${LDFLAGS}"
 
