@@ -49,6 +49,23 @@ After run ```make``` , it will break during stage. After that:
 # UID=$(id -u THE_USERNAME_OF_WHO_BUILT)
 # cd ${WRKDIR}/stage/usr/local
 # find . | cpio -pdmv /usr/local/
+
+Will affect
+
+/usr/local/bin
+/usr/local/etc
+/usr/local/include
+/usr/local/info
+/usr/local/lib
+/usr/local/libdata
+/usr/local/libexec
+/usr/local/man
+/usr/local/sbin
+/usr/local/share
+/usr/local/tests
+
+but owned dirs now belongs to the user who built and manually installed the port...
+
 # find . -type d -uid $UID -mtime -26h | xargs chown 0:0
 ```
 
