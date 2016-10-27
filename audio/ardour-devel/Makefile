@@ -93,8 +93,6 @@ post-extract:
 post-patch:
 	${CP} ${FILESDIR}/revision.cc ${WRKSRC}/libs/ardour
 	${REINPLACE_CMD} "s|VERSAO|${PORTVERSION}|" ${WRKSRC}/libs/ardour/revision.cc
-#	${MV} ${WRKSRC}/wscript ${WRKSRC}/wscript.orig-${PORTVERSION}
-#	${CP} ${WRKSRC}/../freebsd/wscript-freebsd ${WRKSRC}/wscript
 	${REINPLACE_CMD} "s|_FBSD_MAJOR_|${PORTVERSION:C/([0-9])\.([0-9])/\1/}|" ${WRKSRC}/wscript
 	${REINPLACE_CMD} "s|_FBSD_MINOR_|${PORTVERSION:C/([0-9])\.([0-9])/\2/}|" ${WRKSRC}/wscript
 	${REINPLACE_CMD} "s|_FBSD_REVISION_|${PORTREVISION}|" ${WRKSRC}/wscript
@@ -108,9 +106,15 @@ do-build:
 post-build:
 	(cd ${WRKSRC} && ${WAF_CMD} i18n)
 
-#do-install:
-#	${INSTALL_SCRIPT} ${WRKSRC}/build/gtk2_ardour/ardour3 ${PREFIX}/bin/
-#	${MKDIR} ${PREFIX}/etc/${PORTNAME}
+do-install:
+	${INSTALL_DATA} ${FILESDIR}/ardour5.desktop ${PREFIX}/share/applications/
+	${INSTALL_SCRIPT} ${WRKSRC}/build/gtk2_ardour/ardour5 ${PREFIX}/bin/
+	${INSTALL_SCRIPT} ${WRKSRC}/build/tools/luadevel/ardour5-lua ${PREFIX}/bin/
+#	${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
+#	${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
+#	${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
+#	(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
+#
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_dark.rc.pre ${PREFIX}/etc/${PORTNAME}/
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_light.rc.pre ${PREFIX}/etc/${PORTNAME}/
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_dark_styles.rc ${PREFIX}/etc/${PORTNAME}/
@@ -245,6 +249,7 @@ post-build:
 #	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mtest_shared.menu ${PREFIX}/etc/${PORTNAME}/
 #	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/step_editing.bindings ${PREFIX}/etc/${PORTNAME}/
 #	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/gtk2_ardour3.pot ${PREFIX}/etc/${PORTNAME}/
-
+#
 # garantir instalação do man page ardour.1
+
 .include <bsd.port.post.mk>
