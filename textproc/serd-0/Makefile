@@ -10,11 +10,11 @@ PKGNAMESUFFIX=	-0
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Lightweight C library for RDF syntax
 
-LICENSE=        ISC
-LICENSE_GROUPS= OSI
-LICENSE_NAME=   ISC License (ISC)
-LICENSE_FILE=   ${WRKSRC}/COPYING
-LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
+LICENSE=		ISC
+LICENSE_GROUPS=	OSI
+LICENSE_NAME=	ISC License (ISC)
+LICENSE_FILE=	${WRKSRC}/COPYING
+LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 USES=		waf pkgconfig python:build tar:bzip2
 USE_LDCONFIG=	yes
