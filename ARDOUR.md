@@ -1,6 +1,6 @@
-# Ardour BSD
+# Ardour (for FreeBSD)
 
-This port, named `ardour-devel`, is a fork from Ardour. 
+This port, named `ardour5`, is a fork from Ardour 5.x . 
 
 My goal is:
 
@@ -9,59 +9,67 @@ My goal is:
    - yes, it is an old one (version 2), but is quite stable, fast and still a good piece of software
    - it is not a stale port, it stil compiling from source
 
-## Ardour BSD: is now 5.3
+## General Status 
 
-*IT WORKS!*
+*IT WORKS!* for FreeBSD.
 
-port status: 
-   - dependencies OK
-      - missing final tests
-   - ardour-devel (ardour 5.3)
-      - configure OK
-      - compile OK
-      - stage FAILS
-      - install TODO
+### Porting Status
+
+- CNF: make configure . If the port is configured (implies patches, sometimes it is the major part of the whole work).
+- BLD: make build . If the port is built.
+- INS: make install . It means if the port is configured to be auto installed by the port system
+- RUN: application was executed and run fine, after build or installed (manually or via ports system).
+- FMT: passed port format validation (portlint) with or without a few WARNs.
+- TEST: (ports-mgtm/porttools) tested with port command.
+- PR: if I finished the process for submission to the ports tree
+
+```
+Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR
+-------------------------------------------------------------------------------
+audio/ardour5	  OK	OK    Doing OK	  
+audio/lilv-0	  OK	OK    OK    OK	  OK	
+audio/lv2	  OK    OK    OK    OK    OK
+audio/suil-0	  OK    OK    OK    OK    OK	OK
+textproc/serd-0	  OK    OK    OK    OK    OK
+textproc/sord-0	  OK    OK    OK    OK    OK
+textproc/sratom-0 OK    OK    OK    OK    OK
+multimedia/harvid OK    OK    OK    OK    OK
+multimedia/xjadeo OK    OK    OK    OK    OK
+```
+The PR should be submitted after all ports are tested. I'll make a one and only PR.
 
 ### Manual Installation:
 
 After run ```make``` , it will break during stage. After that:
 
+```
+# UID=$(id -u THE_USERNAME_OF_WHO_BUILT)
 # cd ${WRKDIR}/stage/usr/local
 # find . | cpio -pdmv /usr/local/
+# find . -type d -uid $UID -mtime -26h | xargs chown 0:0
+```
 
 #### Manual deinstallation:
 
+```
 # find . | sed -e 's,^\./,/usr/local/,g' | xargs rm
+```
 
-
-
-Updating this markdown file from ardour 3.3 port ...
-
-Please, check it later.
-
-## My Ardour 3.3 Port
-
-I did a lot of work , staged the old ports but, some things happened wrong:
-
-- a lot of new compiler erros (code style)
-- aubio new version (compared to the year 2013) need some changes in header files... 
-
-So, I'm trying to port 5.3 .
 
 # New Lib Depends
 
 This project provides many new ports and updates to existing ports (audio/lv2core).
 
 Now it is possible to have full LV2 power (use of LV2 GUIs for plugins) and the
-major features included in Ardour 3 when compared to the previous major release:
+major features included in Ardour when compared to the previous major release:
 
 - MIDI record and playback (works with FreeBSD + linuxsampler or gigedit or qsampler or calf synth plugins ...)
 - LV2 plugins with its GUIs (improves audio/calf plugins), see http://lv2plug.in/
-- many other new features introduced in Ardour 3
+- many other new features introduced in Ardour
 
 Ardour 2 is not considered old fashion, nor should be droped. Use it if:
 
-- you don't need Ardour 3 new features
+- you don't need recent Ardour new features
 - if you have Ardour 2.x projects using EQ automations (in these cases the project won't be compatible with Ardour 3.x)
 
 ## Staged
@@ -77,7 +85,17 @@ Ordered by build dependency:
 - multimedia/harvid
 - multimedia/xjadeo
 
-# Desired Changes to Existing Ports
+# ROADMAP
+
+## Ports Without Maintainer
+
+The list of exiting dependencies of Ardour in the ports tree and that
+do not have a maintainer, are listed in directory 2adopt .
+
+I'm considering adopt these ports...
+
+
+## Desired Changes to Existing Ports
 
 - audio/slv2
    The author rewrote it as a new library (audio/lilv-0)
@@ -86,12 +104,21 @@ Ordered by build dependency:
 - audio/calf
    Change depency from audio/lv2-core to audio/lv2 (allowing use of LV2 GUIs)
 
-# TODO
-
-- MASTER_SITES ... ok
-
 
 ## History
+
+### Ardour 5.3
+
+Oct, 2016. Started a ports dir in github.
+
+### My Ardour 3.3 Port
+
+I did a lot of work , staged the old ports but, some things happened wrong:
+
+- a lot of new compiler erros (code style)
+- aubio new version (compared to the year 2013) need some changes in header files...
+
+So, I'm trying to port 5.3 .
 
 First port: Ardour 3.3 , july/2013.
 
@@ -120,63 +147,4 @@ Started playing around with Ardour 3.0 Beta 5:
 - Announcement, FreeBSD Forums : https://forums.freebsd.org/threads/40040/#post-224960
 - FreeBSD Multimedia Mailing List : https://lists.freebsd.org/pipermail/freebsd-multimedia/2013-July/
     - Announcement: https://lists.freebsd.org/pipermail/freebsd-multimedia/2013-July/014136.html
-
-# My Flight Check
-
-## Ports que precisam the Maintainer:
-
-qsynth-0.4.1
-qsampler-0.4.0
-qjackctl-0.4.2
-aubio-0.4.2_1
-   textproc/txt2man (aubio +OPT FFMPEG)
-audio/rubberband
-
-Message from qsynth-0.4.1:
-===>   NOTICE:
-
-The qsynth port currently does not have a maintainer. As a result, it is
-more likely to have unresolved issues, not be up-to-date, or even be removed in
-the future. To volunteer to maintain this port, please create an issue at:
-
-https://bugs.freebsd.org/bugzilla
-
-More information about port maintainership is available at:
-
-https://www.freebsd.org/doc/en/articles/contributing/ports-contributing.html#maintain-port
-Message from qsampler-0.4.0:
-===>   NOTICE:
-
-The qsampler port currently does not have a maintainer. As a result, it is
-more likely to have unresolved issues, not be up-to-date, or even be removed in
-the future. To volunteer to maintain this port, please create an issue at:
-
-https://bugs.freebsd.org/bugzilla
-
-More information about port maintainership is available at:
-
-https://www.freebsd.org/doc/en/articles/contributing/ports-contributing.html#maintain-port
-Message from qjackctl-0.4.2:
-===>   NOTICE:
-
-The qjackctl port currently does not have a maintainer. As a result, it is
-more likely to have unresolved issues, not be up-to-date, or even be removed in
-the future. To volunteer to maintain this port, please create an issue at:
-
-https://bugs.freebsd.org/bugzilla
-
-More information about port maintainership is available at:
-
-https://www.freebsd.org/doc/en/articles/contributing/ports-contributing.html#maintain-port
-
-Message from aubio-0.4.2_1:
-===>   NOTICE:
-
-The aubio port currently does not have a maintainer. As a result, it is
-more likely to have unresolved issues, not be up-to-date, or even be removed in
-the future. To volunteer to maintain this port, please create an issue at:
-
-https://bugs.freebsd.org/bugzilla
-
-More information about port maintainership is available at:
 
