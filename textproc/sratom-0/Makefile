@@ -10,11 +10,11 @@ PKGNAMESUFFIX=	-0
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Library for serialising LV2 atoms to/from RDF Turtle syntax
 
-LICENSE=        ISC
-LICENSE_GROUPS= OSI
-LICENSE_NAME=   ISC License (ISC)
-LICENSE_FILE=   ${WRKSRC}/COPYING
-LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
+LICENSE=		ISC
+LICENSE_GROUPS=	OSI
+LICENSE_NAME=	ISC License (ISC)
+LICENSE_FILE=	${WRKSRC}/COPYING
+LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 BUILD_DEPENDS=	${LOCALBASE}/include/lv2.h:audio/lv2
 LIB_DEPENDS=	libserd-0.so:textproc/serd-0 \
