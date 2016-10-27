@@ -37,7 +37,7 @@ USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
 MAKE_JOBS_SAFE=	yes
 PATCH_STRIP=	-p1
-CONFIGURE_ARGS=	--mandir=${STAGEDIR}${MANPREFIX}/man \
+CONFIGURE_ARGS=	--mandir=${WRKSRC} \
 		--prefix=${STAGEDIR}${PREFIX} \
 		--also-include="${LOCALBASE}/include" \
 		--dist-target=${DIST_TARGET}
@@ -88,7 +88,7 @@ USES+=			gettext
 CFLAGS:=	${CFLAGS:N-fno-strict-aliasing}
 
 post-extract:
-	${MV} ${WRKDIR}/ardour ${WRKDIR}/${PKGNAME}
+	${MV} ${WRKDIR}/ardour ${WRKDIR}/ardour-${GH_TAGNAME}
 
 post-patch:
 	${CP} ${FILESDIR}/revision.cc ${WRKSRC}/libs/ardour
@@ -107,12 +107,15 @@ post-build:
 	(cd ${WRKSRC} && ${WAF_CMD} i18n)
 
 do-install:
-	${INSTALL_DATA} ${FILESDIR}/ardour5.desktop ${PREFIX}/share/applications/
-	${INSTALL_SCRIPT} ${WRKSRC}/build/gtk2_ardour/ardour5 ${PREFIX}/bin/
-	${INSTALL_SCRIPT} ${WRKSRC}/build/tools/luadevel/ardour5-lua ${PREFIX}/bin/
-#	${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
-#	${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
-#	${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
+	${INSTALL_DATA} ${FILESDIR}/ardour5.desktop ${STAGEDIR}${PREFIX}/share/applications/
+	${INSTALL_SCRIPT} ${WRKSRC}/build/gtk2_ardour/ardour5 ${STAGEDIR}${PREFIX}/bin/
+	${INSTALL_SCRIPT} ${WRKSRC}/build/tools/luadevel/ardour5-lua ${STAGEDIR}${PREFIX}/bin/
+	${INSTALL_DATA} ${WRKSRC}/ardour.1 ${STAGEDIR}${PREFIX}/man/man1/
+	${GZIP_CMD} ${STAGEDIR}${PREFIX}/man/man1/ardour.1
+	${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
+	${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
+	${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
+# continuar, seguir o do sord e arrumar os demais ports:
 #	(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
 #
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_dark.rc.pre ${PREFIX}/etc/${PORTNAME}/

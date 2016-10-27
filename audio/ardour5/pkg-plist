@@ -392,3 +392,4 @@ share/ardour5/scripts/synth1.lua
 share/ardour5/scripts/tomsloop.lua
 share/ardour5/scripts/voice_activate.lua
 share/applications/ardour5.desktop
+man/man1/ardour.1.gz
