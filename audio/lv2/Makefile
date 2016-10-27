@@ -9,11 +9,11 @@ MASTER_SITES=	http://lv2plug.in/spec/
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Extensible audio plugin interface
 
-LICENSE=        ISC
-LICENSE_GROUPS= OSI
-LICENSE_NAME=   ISC License (ISC)
-LICENSE_FILE=   ${WRKSRC}/COPYING
-LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
+LICENSE=		ISC
+LICENSE_GROUPS=	OSI
+LICENSE_NAME=	ISC License (ISC)
+LICENSE_FILE=	${WRKSRC}/COPYING
+LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 LIB_DEPENDS=	libsndfile.so:audio/libsndfile \
 		libfontconfig.so:x11-fonts/fontconfig \
