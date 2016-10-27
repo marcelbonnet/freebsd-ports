@@ -9,6 +9,3 @@ lib/liblilv-0.so
 lib/liblilv-0.so.0
 lib/liblilv-0.so.0.16.0
 libdata/pkgconfig/lilv-0.pc
-@dirrm include/lilv-0/lilv
-@dirrm include/lilv-0
-@dirrmtry etc/bash_completion.d

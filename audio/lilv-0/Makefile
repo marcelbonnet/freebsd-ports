@@ -10,11 +10,11 @@ PKGNAMESUFFIX=	-0
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	LV2 Plugin Support Library
 
-LICENSE=        ISC
-LICENSE_GROUPS= OSI
-LICENSE_NAME=   ISC License (ISC)
-LICENSE_FILE=   ${WRKSRC}/COPYING
-LICENSE_PERMS=  dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
+LICENSE=		ISC
+LICENSE_GROUPS=	OSI
+LICENSE_NAME=	ISC License (ISC)
+LICENSE_FILE=	${WRKSRC}/COPYING
+LICENSE_PERMS=	dist-mirror dist-sell pkg-mirror pkg-sell auto-accept none
 
 BUILD_DEPENDS=	lv2>0:audio/lv2
 LIB_DEPENDS=	libserd-0.so:textproc/serd-0 \
