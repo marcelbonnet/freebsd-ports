@@ -22,11 +22,12 @@ My goal is:
 - FMT: passed port format validation (portlint) with or without a few WARNs.
 - TEST: (ports-mgtm/porttools) tested with port command.
 - PR: if I finished the process for submission to the ports tree
+- TAG: final tag created in my own git repo, when applicable
 
 ```
-Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR
+Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR TAG
 -------------------------------------------------------------------------------
-audio/ardour5	  OK	OK    Doing OK	  
+audio/ardour5	  OK	OK    Doing OK			 FBSD-5.3
 audio/lilv-0	  OK	OK    OK    OK	  OK	
 audio/lv2	  OK    OK    OK    OK    OK
 audio/suil-0	  OK    OK    OK    OK    OK	OK
@@ -36,6 +37,8 @@ textproc/sratom-0 OK    OK    OK    OK    OK
 multimedia/harvid OK    OK    OK    OK    OK
 multimedia/xjadeo OK    OK    OK    OK    OK
 ```
+
+
 The PR should be submitted after all ports are tested. I'll make a one and only PR.
 
 ### Manual Installation:

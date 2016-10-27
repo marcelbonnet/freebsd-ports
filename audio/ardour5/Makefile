@@ -1,7 +1,7 @@
 # Created by: Marcel Bonnet <marcelbonnet@gmail.com>
 # $FreeBSD$
 
-PORTNAME=	ardour-devel
+PORTNAME=	ardour5
 PORTVERSION=	5.3
 CATEGORIES=	audio
 DISTNAME= ardour5-${PORTVERSION}
@@ -31,7 +31,7 @@ RUN_DEPENDS=	${LOCALBASE}/include/boost/version.hpp:devel/boost-libs \
 USE_GITHUB=	yes
 GH_ACCOUNT=	marcelbonnet
 GH_PROJECT=	ardour
-GH_TAGNAME=	devel-${PORTVERSION}
+GH_TAGNAME=	FBSD-${PORTVERSION}
 USES=		waf pkgconfig python:build tar:bzip2 gettext
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
