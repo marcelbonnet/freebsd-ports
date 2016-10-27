@@ -34,11 +34,14 @@ do-build:
 	@${RM} ${WRKSRC}/.waf-*/waflib/extras/autowaf.pyc
 
 do-install:
-	@(cd ${WRKSRC}/build && ${INSTALL_DATA} sord-0.pc \
+	(cd ${WRKSRC}/build && ${INSTALL_DATA} sord-0.pc \
 	    ${STAGEDIR}${PREFIX}/libdata/pkgconfig)
-	@${REINPLACE_CMD} "s,^prefix=.*,prefix=${PREFIX}," ${STAGEDIR}${PREFIX}/libdata/pkgconfig/sord-0.pc
-	@${RM} ${STAGEDIR}${PREFIX}/libdata/pkgconfig/sord-0.pc.bak
-	@(cd ${WRKSRC} && ${WAF_CMD} install)
+	${REINPLACE_CMD} "s,^prefix=.*,prefix=${PREFIX}," ${STAGEDIR}${PREFIX}/libdata/pkgconfig/sord-0.pc
+	${RM} ${STAGEDIR}${PREFIX}/libdata/pkgconfig/sord-0.pc.bak
+	(cd ${WRKSRC} && ${WAF_CMD} install)
+	#(cd ${WRKSRC}/sord/ && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/include/sord-0/sord/)
+	${INSTALL_DATA} ${STAGEDIR}${PREFIX}/include/sord-0/sord/sord.h ${STAGEDIR}${PREFIX}/include/sord-0/sord/
+	${INSTALL_DATA} ${STAGEDIR}${PREFIX}/include/sord-0/sord/sordmm.hpp ${STAGEDIR}${PREFIX}/include/sord-0/sord/
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/sordi
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/sord_validate
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/libsord-0.so.0.12.2
