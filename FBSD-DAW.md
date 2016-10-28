@@ -37,10 +37,10 @@ Some info about the FreeBSD architecture:
 - man rtprio
 - https://www.freebsd.org/doc/en_US.ISO8859-1/books/arch-handbook/smp-design.html
 
-$  rtprio `pgrep jackd | head -1`
+$  rtprio `pgrep -o jackd`
 rtprio: normal priority
-$  sudo rtprio 0 -`pgrep jackd | head -1`                                                                
-$  rtprio `pgrep jackd | head -1`
+$  sudo rtprio 0 -`pgrep -o jackd`                                                                
+$  rtprio `pgrep -o jackd`
 rtprio: realtime priority 0
 
 ## Getting Rid of DeNormals
@@ -160,6 +160,10 @@ TODO
 
 - audio/hydrogen
 	Drum machine
+
+## Synthesizers
+
+- audio/zynaddsubfx
 
 ## MIDI Multitrack Recording
 
