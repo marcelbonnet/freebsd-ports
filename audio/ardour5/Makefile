@@ -23,7 +23,17 @@ LIB_DEPENDS=	librubberband.so.2:audio/rubberband \
 		libsratom-0.so:textproc/sratom-0 \
 		libogg.so:audio/libogg \
 		libFLAC.so:audio/flac \
-		libjack.so:audio/jack
+		libjack.so:audio/jack \
+		libreadline.so:devel/readline
+LIB_DEPENDS+=libcurl.so:ftp/curl
+LIB_DEPENDS+=libfftw3f.so:math/fftw3-float
+LIB_DEPENDS+=libfontconfig.so:x11-fonts/fontconfig
+LIB_DEPENDS+=libfreetype.so:print/freetype2
+LIB_DEPENDS+=liblo.so:audio/liblo
+LIB_DEPENDS+=libsndfile.so:audio/libsndfile
+LIB_DEPENDS+=libtag.so:audio/taglib
+LIB_DEPENDS+=libvamp-hostsdk.so:audio/vamp-plugin-sdk
+LIB_DEPENDS+=libvamp-sdk.so:audio/vamp-plugin-sdk
 BUILD_DEPENDS=	lv2>0:audio/lv2
 RUN_DEPENDS=	${LOCALBASE}/include/boost/version.hpp:devel/boost-libs \
 		lv2>0:audio/lv2
@@ -35,6 +45,15 @@ GH_TAGNAME=	FBSD-${PORTVERSION}
 USES=		waf pkgconfig python:build tar:bzip2 gettext
 USE_LDCONFIG=	${PREFIX}/lib/${PORTNAME}
 USE_GNOME=	gtk20 libxslt libgnomecanvas intltool
+USE_GNOME+=atkmm
+USE_GNOME+=cairo
+USE_GNOME+=cairomm
+USE_GNOME+=gdkpixbuf2
+USE_GNOME+=glibmm
+USE_GNOME+=gtkmm24
+USE_GNOME+=libsigc++20
+USE_GNOME+=pangomm
+USE_XORG+=x11
 MAKE_JOBS_SAFE=	yes
 PATCH_STRIP=	-p1
 CONFIGURE_ARGS=	--mandir=${WRKSRC} \
@@ -77,14 +96,6 @@ PLIST_SUB+=	NO_VST=""
 PLIST_SUB+=	VST="@comment "
 .endif
 
-#.if ${PORT_OPTIONS:MNLS}
-USES+=			gettext
-#PLIST_SUB+=		NLS=""
-#.else
-#CONFIGURE_ARGS+=	--disable-nls
-#PLIST_SUB+=		NLS="@comment "
-#.endif
-
 CFLAGS:=	${CFLAGS:N-fno-strict-aliasing}
 
 post-extract:
@@ -115,160 +126,38 @@ do-install:
 	(cd ${WRKSRC} && ${WAF_CMD} --destdir=${STAGEDIR}  install)
 	(cd ${WRKSRC}/gtk2_ardour/resources && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/share/${PORTNAME}/resources )
 	(cd ${WRKSRC}/gtk2_ardour/themes && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/share/${PORTNAME}/themes )
-
-#	.for FILE in /resources/Ardour-icon_16px.png /resources/Ardour-icon_22px.png \
-#		/resources/Ardour-icon_256px.png /resources/Ardour-icon_32px.png \
-#		/resources/Ardour-icon_48px.png /resources/Ardour-icon_512px.png \
-#		/resources/Ardour-small-splash.png /resources/Ardour-splash.png
-#		(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
-##
-#	.endfor
-
-	#${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
-	#.for resource in ardour.menus trx.menus default_ui_config clearlooks.rc ardour.keys
-	#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/${resource} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/
-	#.endfor
-	#${INSTALL_DATA} ${WRKSRC}/system_config ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/
-	#${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
-	#${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
-	#(cd ${WRKSRC} && ${WAF_CMD} --destdir=${STAGEDIR}  install)
-	#(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
-#
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_dark.rc.pre ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_light.rc.pre ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_dark_styles.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_light_styles.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_dark_fonts.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_light_fonts.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_widgets.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour.menus ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/mnemonic-us.bindings ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_dark.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_light.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_ui_default.conf ${PREFIX}/etc/${PORTNAME}/
-#	${MKDIR} ${PREFIX}/lib/${PORTNAME}
-#	${MKDIR} ${PREFIX}/lib/${PORTNAME}/panners
-#	${MKDIR} ${PREFIX}/lib/${PORTNAME}/engines
-#	${MKDIR} ${PREFIX}/lib/${PORTNAME}/surfaces
-#	${MKDIR} ${PREFIX}/lib/${PORTNAME}/vamp
-#	${INSTALL_PROGRAM} ${WRKSRC}/build/gtk2_ardour/ardour-3.3 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/pbd/libpbd.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/ardour/libardour.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/midi++2/libmidipp.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/evoral/libsmf.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/evoral/libevoral.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/timecode/libtimecode.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/control_protocol/libardourcp.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/generic_midi/libardour_generic_midi.so ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/mackie/libardour_mcp.so ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/osc/libardour_osc.so ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvamphost.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvampplugin.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/qm-dsp/libqmdsp.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/taglib/libtaglib.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/libltc/libltc.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/rubberband/librubberband.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/audiographer/libaudiographer.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/gtkmm2ext/libgtkmm2ext.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/2in2out/libpan2in2out.so ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/1in2out/libpan1in2out.so ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/vbap/libpanvbap.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/clearlooks-newer/libclearlooks.so ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/pbd/libpbd.so.4 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/pbd/libpbd.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-plugins/libardourvampplugins.so ${PREFIX}/lib/${PORTNAME}/vamp/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-plugins/libardourvampplugins.so.0 ${PREFIX}/lib/${PORTNAME}/vamp/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-plugins/libardourvampplugins.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/vamp/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/ardour/libardour.so.3 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/ardour/libardour.so.3.0.0. ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/midi++2/libmidipp.so.4 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/midi++2/libmidipp.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/evoral/libevoral.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/evoral/libevoral.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/timecode/libtimecode.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/timecode/libtimecode.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/control_protocol/libardourcp.so.4 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/control_protocol/libardourcp.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/generic_midi/libardour_generic_midi.so.4 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/generic_midi/libardour_generic_midi.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/mackie/libardour_mcp.so.4 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/mackie/libardour_mcp.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/osc/libardour_osc.so.4 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/surfaces/osc/libardour_osc.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/surfaces/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvampplugin.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvampplugin.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvamphost.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/vamp-sdk/libvamphost.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/qm-dsp/libqmdsp.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/qm-dsp/libqmdsp.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/taglib/libtaglib.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/taglib/libtaglib.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/libltc/libltc.so.1 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/libltc/libltc.so.1.1.1 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/rubberband/librubberband.so.4 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/rubberband/librubberband.so.4.1.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/audiographer/libaudiographer.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/audiographer/libaudiographer.so.0.0.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/gtkmm2ext/libgtkmm2ext.so.0 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/gtkmm2ext/libgtkmm2ext.so.0.8.3 ${PREFIX}/lib/${PORTNAME}/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/2in2out/libpan2in2out.so.1 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/2in2out/libpan2in2out.so.1.0.0 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/1in2out/libpan1in2out.so.1 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/1in2out/libpan1in2out.so.1.0.0 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/vbap/libpanvbap.so.1 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/panners/vbap/libpanvbap.so.1.0.0 ${PREFIX}/lib/${PORTNAME}/panners/
-#	${INSTALL_LIB} ${WRKSRC}/build/libs/clearlooks-newer/engines/libclearlooks.so ${PREFIX}/lib/${PORTNAME}/engines/
-#	${MKDIR} ${DATADIR}
-#	${CP} -R ${WRKSRC}/icons ${DATADIR}/
-#	${CP} -R ${WRKSRC}/export ${DATADIR}/
-#	${CP} -R ${WRKSRC}/midi_maps ${DATADIR}/
-#	${CP} -R ${WRKSRC}/mcp ${DATADIR}/
-#	${CP} -R ${WRKSRC}/patchfiles ${DATADIR}/
-#	${CP} -R ${WRKSRC}/gtk2_ardour/pixmaps ${DATADIR}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/splash.png ${DATADIR}/
-#	${MKDIR} ${PREFIX}/share/applications
-#	${INSTALL_DATA} ${FILESDIR}/ardour.desktop ${PREFIX}/share/applications/
-#	${CP} -R ${WRKSRC}/gtk2_ardour/pixmaps ${DATADIR}/
-#	${CP} -R ${WRKSRC}/gtk2_ardour/icons ${DATADIR}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ArdourMono.ttf ${DATADIR}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/SAE-de-keypad.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/SAE-de-nokeypad.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/SAE-us-keypad.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/SAE-us-nokeypad.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/arcall ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardbg ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardbg-scons ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardev ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardev_common.sh.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour-sae.menus ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour.menus.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour.sh.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour2_ui_dark_sae.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour2_ui_light_sae.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3.desktop.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3.xml ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_fonts.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_styles.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_ui_dark.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_ui_light.rc.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ardour3_widget_list.rc ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/arldd ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/arprof-scons ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/arval ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/arval-scons ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/au_pluginui.mm ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/cocoacarbon.mm ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/editor.bindings ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/editor_xpms ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/ergonomic-us.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mixer.bindings ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mnemonic-us.bindings.in ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mtest.menus ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mtest_other.menus ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/mtest_shared.menu ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/step_editing.bindings ${PREFIX}/etc/${PORTNAME}/
-#	${INSTALL_DATA} ${WRKSRC}/gtk2_ardour/gtk2_ardour3.pot ${PREFIX}/etc/${PORTNAME}/
-#
-# garantir instalação do man page ardour.1
-
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/engines/libclearlooks.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/sanityCheck
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libqmdsp.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/vamp/libardourvampplugins.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libpbd.so.4.1.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libevoral.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libtimecode.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libaudiographer.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/reasonablesynth.lv2/reasonablesynth.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/a-comp.lv2/a-comp.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/a-delay.lv2/a-delay.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/a-eq.lv2/a-eq.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/a-reverb.lv2/a-reverb.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/LV2/a-fluidsynth.lv2/a-fluidsynth.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/ardour-vst-scanner
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/ardour-exec-wrapper
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libmidipp.so.4.1.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libardour.so.3.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libptformat.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/backends/libjack_audiobackend.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/panners/libpan2in2out.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/panners/libpan1in2out.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/panners/libpanbalance.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/panners/libpanvbap.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libgtkmm2ext.so.0.8.3
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/surfaces/libardour_osc.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/surfaces/libardour_mcp.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/surfaces/libardour_faderport.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/surfaces/libardour_generic_midi.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libardourcp.so
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/luasession
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/libcanvas.so.0.0.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/hardour-5.3.0
+	${STRIP_CMD} ${STAGEDIR}${PREFIX}/lib/ardour5/ardour-5.3.0
 .include <bsd.port.post.mk>
