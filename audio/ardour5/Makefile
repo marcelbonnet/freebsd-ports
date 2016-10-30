@@ -4,7 +4,7 @@
 PORTNAME=	ardour5
 PORTVERSION=	5.3
 CATEGORIES=	audio
-DISTNAME= ardour5-${PORTVERSION}
+DISTNAME=	ardour5-${PORTVERSION}
 
 MAINTAINER=	marcelbonnet@gmail.com
 COMMENT=	Multitrack audio recording and editing

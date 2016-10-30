@@ -27,7 +27,7 @@ My goal is:
 ```
 Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR TAG
 -------------------------------------------------------------------------------
-audio/ardour5	  OK	OK    OK    OK			 FBSD-5.3
+audio/ardour5	  OK	OK    OK    OK	  OK		 FBSD-5.3
 audio/lilv-0	  OK	OK    OK    OK	  OK	
 audio/lv2	  OK    OK    OK    OK    OK
 audio/suil-0	  OK    OK    OK    OK    OK	OK
