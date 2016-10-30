@@ -27,7 +27,7 @@ My goal is:
 ```
 Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR TAG
 -------------------------------------------------------------------------------
-audio/ardour5	  OK	OK    Doing OK			 FBSD-5.3
+audio/ardour5	  OK	OK    OK    OK			 FBSD-5.3
 audio/lilv-0	  OK	OK    OK    OK	  OK	
 audio/lv2	  OK    OK    OK    OK    OK
 audio/suil-0	  OK    OK    OK    OK    OK	OK
@@ -46,6 +46,7 @@ The PR should be submitted after all ports are tested. I'll make a one and only 
 After run ```make``` , it will break during stage. After that:
 
 ```
+$ cd ${WRKSRC} && ./waf --destdir=${STAGEDIR} install
 # UID=$(id -u THE_USERNAME_OF_WHO_BUILT)
 # cd ${WRKDIR}/stage/usr/local
 # find . | cpio -pdmv /usr/local/
