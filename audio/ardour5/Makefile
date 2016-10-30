@@ -112,11 +112,27 @@ do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/build/tools/luadevel/ardour5-lua ${STAGEDIR}${PREFIX}/bin/
 	${INSTALL_DATA} ${WRKSRC}/ardour.1 ${STAGEDIR}${PREFIX}/man/man1/
 	${GZIP_CMD} ${STAGEDIR}${PREFIX}/man/man1/ardour.1
-	${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
-	${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
-	${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
-# continuar, seguir o do sord e arrumar os demais ports:
-#	(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
+	(cd ${WRKSRC} && ${WAF_CMD} --destdir=${STAGEDIR}  install)
+	(cd ${WRKSRC}/gtk2_ardour/resources && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/share/${PORTNAME}/resources )
+	(cd ${WRKSRC}/gtk2_ardour/themes && ${COPYTREE_SHARE} . ${STAGEDIR}${PREFIX}/share/${PORTNAME}/themes )
+
+#	.for FILE in /resources/Ardour-icon_16px.png /resources/Ardour-icon_22px.png \
+#		/resources/Ardour-icon_256px.png /resources/Ardour-icon_32px.png \
+#		/resources/Ardour-icon_48px.png /resources/Ardour-icon_512px.png \
+#		/resources/Ardour-small-splash.png /resources/Ardour-splash.png
+#		(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
+##
+#	.endfor
+
+	#${MKDIR} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}
+	#.for resource in ardour.menus trx.menus default_ui_config clearlooks.rc ardour.keys
+	#	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/${resource} ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/
+	#.endfor
+	#${INSTALL_DATA} ${WRKSRC}/system_config ${STAGEDIR}${PREFIX}/etc/${PORTNAME}/
+	#${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
+	#${MKDIR} ${STAGEDIR}${PREFIX}/share/${PORTNAME}
+	#(cd ${WRKSRC} && ${WAF_CMD} --destdir=${STAGEDIR}  install)
+	#(cd ${WRKSRC}/examples && ${COPYTREE_SHARE} . ${STAGEDIR}${EXAMPLESDIR})
 #
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_dark.rc.pre ${PREFIX}/etc/${PORTNAME}/
 #	${INSTALL_DATA} ${WRKSRC}/build/gtk2_ardour/ardour3_ui_light.rc.pre ${PREFIX}/etc/${PORTNAME}/
