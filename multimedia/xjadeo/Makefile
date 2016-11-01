@@ -44,9 +44,10 @@ LIB_DEPENDS=	libjack.so:audio/jack \
 USE_GITHUB=	yes
 GH_ACCOUNT=	x42
 GH_PROJECT=	${PORTNAME}
-GH_TAGNAME=	${PORTVERSION}
+GH_TAGNAME=	v${PORTVERSION}
 USES=	gmake iconv
 USE_SDL=	sdl
+USE_AUTOTOOLS=	autoheader
 GNU_CONFIGURE=	yes
 MAKE_JOBS_UNSAFE=yes
 CPPFLAGS+=	-I${LOCALBASE}/include -I${LOCALBASE}/include/libavutil \
@@ -57,6 +58,9 @@ CONFIGURE_ARGS=	--disable-alsamidi \
 		--prefix=${STAGEDIR}${PREFIX}
 
 .include <bsd.port.pre.mk>
+
+pre-configure:
+	(cd ${WRKSRC} && ./autogen.sh)
 
 pre-install:
 	${CP} ${WRKSRC}/doc/xjadeorc ${STAGEDIR}${PREFIX}/etc/xjadeorc.sample

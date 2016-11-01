@@ -23,19 +23,20 @@ My goal is:
 - TEST: (ports-mgtm/porttools) tested with port command.
 - PR: if I finished the process for submission to the ports tree
 - TAG: final tag created in my own git repo, when applicable
+- DIS: fetch distfiles
 
 ```
-Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR TAG
+Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR DIS   TAG
 -------------------------------------------------------------------------------
-audio/ardour5	  OK	OK    OK    OK	  OK		 FBSD-5.3
+audio/ardour5	  OK	OK    OK    OK	  OK	OK	 x     FBSD-5.3
 audio/lilv-0	  OK	OK    OK    OK	  OK	
 audio/lv2	  OK    OK    OK    OK    OK
-audio/suil-0	  OK    OK    OK    OK    OK	OK
-textproc/serd-0	  OK    OK    OK    OK    OK
-textproc/sord-0	  OK    OK    OK    OK    OK
-textproc/sratom-0 OK    OK    OK    OK    OK
-multimedia/harvid OK    OK    OK    OK    OK
-multimedia/xjadeo OK    OK    OK    OK    OK
+audio/suil-0	  OK    OK    OK    OK    OK	OK    Y	 OK
+textproc/serd-0	  OK    OK    OK    OK    OK	OK    Y	 OK
+textproc/sord-0	  OK    OK    OK    OK    OK	OK    Y	 OK
+textproc/sratom-0 OK    OK    OK    OK    OK	OK    Y	 OK
+multimedia/harvid OK    OK    OK    OK    OK	OK    Y	 OK
+multimedia/xjadeo OK    OK    OK    OK    OK	OK    Y	 OK
 ```
 
 

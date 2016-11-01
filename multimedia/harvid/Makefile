@@ -18,7 +18,7 @@ LIB_DEPENDS=	libpng16.so:graphics/png
 USE_GITHUB=	yes
 GH_ACCOUNT=	x42
 GH_PROJECT=	${PORTNAME}
-GH_TAGNAME=	${PORTVERSION}
+GH_TAGNAME=	v${PORTVERSION}
 USES=	gmake jpeg
 MAKE_JOBS_UNSAFE=	yes
 
@@ -31,7 +31,5 @@ post-install:
 	${LN} -s ${PREFIX}/bin/ffmpeg ${STAGEDIR}${PREFIX}/bin/ffmpeg_harvid
 	${LN} -s ${PREFIX}/bin/ffprobe ${STAGEDIR}${PREFIX}/bin/ffprobe_harvid
 	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/harvid
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/ffmpeg_harvid
-	${STRIP_CMD} ${STAGEDIR}${PREFIX}/bin/ffprobe_harvid
 
 .include <bsd.port.post.mk>
