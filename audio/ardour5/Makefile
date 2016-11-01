@@ -69,31 +69,12 @@ CXXFLAGS+=	-I${LOCALBASE}/include -I/usr/include
 CONFIGURE_ENV+=	CC=${CC} CXX=${CXX} \
 		LINKFLAGS="${LDFLAGS}"
 
-OPTIONS_DEFINE=		DEBUG VST
-
-VST_DESC=		Enable VST plugins support
+OPTIONS_DEFINE=		DEBUG
 
 .include <bsd.port.pre.mk>
 
 .if ${PORT_OPTIONS:MDEBUG}
 CONFIGURE_ARGS+=	--debug
-.endif
-
-.if ${PORT_OPTIONS:MVST}
-.if ${ARCH} == "x86_64"
-IGNORE=		you cannot use VST plugins with a 64 bit host
-.endif
-CONFIGURE_ARGS+=	--lxvst
-BUILD_DEPENDS+=	winegcc:emulators/wine \
-		unzip:archivers/unzip \
-		gsed:textproc/gsed
-LIB_DEPENDS+=	libwine.so:emulators/wine
-
-PLIST_SUB+=	NO_VST="@comment "
-PLIST_SUB+=	VST=""
-.else
-PLIST_SUB+=	NO_VST=""
-PLIST_SUB+=	VST="@comment "
 .endif
 
 CFLAGS:=	${CFLAGS:N-fno-strict-aliasing}
