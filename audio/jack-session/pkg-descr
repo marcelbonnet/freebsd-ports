@@ -1,0 +1,4 @@
+A command line tool jack client that saves and restores jack 
+connections to and from a file. It does not keep state from client
+applications, neither provides ways to re-open the used applications
+in a jack session.
