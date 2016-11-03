@@ -161,6 +161,15 @@ TODO
 - audio/hydrogen
 	Drum machine
 
+
+### Samples
+
+#### Drums (real drums, very organic sound)
+
+- http://www.bandshed.net/avldrumkits/ The author sampled two different drums with good mics.
+
+The samples are available in 3 formats: h2drumkit for Hydrogen Drum Machine, SFZ which is an open cross-platform sound library format supported in applications like LinuxSampler and Sforzando and lastly in the popular Soundfont2 format. If you are simply looking for drum samples to load in a sampler the zipped SFZ folders also contain all the individual samples.
+
 ## Synthesizers
 
 - audio/zynaddsubfx
