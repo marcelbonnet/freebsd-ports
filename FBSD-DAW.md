@@ -130,6 +130,10 @@ TODO
 
 - audio/ardour
 
+### Ardour Tips
+
+- http://libremusicproduction.com/tutorials/using-avl-drumkits-fluid-synth-ardour How to draw MIDI drums; link to author's free sampled drum kits; using fluidsynth as Ardour plugin; how to set up.
+
 ## CLI
 
 - audio/ecasound
