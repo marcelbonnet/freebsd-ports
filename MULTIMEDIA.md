@@ -1,3 +1,3 @@
-== graphics/turbo-jpeg ==
+== graphics/jpeg-turbo ==
 
-Prefer this instead of graphics/jpeg . Turbo jpeg is faster.
+Prefer this instead of graphics/jpeg . *jpeg-turbo* is faster.
