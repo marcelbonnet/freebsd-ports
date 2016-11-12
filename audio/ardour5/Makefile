@@ -79,9 +79,6 @@ CONFIGURE_ARGS+=	--debug
 
 CFLAGS:=	${CFLAGS:N-fno-strict-aliasing}
 
-post-extract:
-	${MV} ${WRKDIR}/ardour ${WRKDIR}/ardour-${GH_TAGNAME}
-
 post-patch:
 	${CP} ${FILESDIR}/revision.cc ${WRKSRC}/libs/ardour
 	${REINPLACE_CMD} "s|VERSAO|${PORTVERSION}|" ${WRKSRC}/libs/ardour/revision.cc
