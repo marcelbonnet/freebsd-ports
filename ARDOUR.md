@@ -28,7 +28,7 @@ My goal is:
 ```
 Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR DIS   TAG
 -------------------------------------------------------------------------------
-audio/ardour5	  OK	OK    OK    OK	  OK	OK	 OK     5.3
+audio/ardour5	  OK	OK    OK    OK	  OK	OK    Y	 OK     5.3
 audio/lilv-0	  OK	OK    OK    OK	  OK	
 audio/lv2	  OK    OK    OK    OK    OK
 audio/suil-0	  OK    OK    OK    OK    OK	OK    Y	 OK
@@ -36,7 +36,9 @@ textproc/serd-0	  OK    OK    OK    OK    OK	OK    Y	 OK
 textproc/sord-0	  OK    OK    OK    OK    OK	OK    Y	 OK
 textproc/sratom-0 OK    OK    OK    OK    OK	OK    Y	 OK
 multimedia/harvid OK    OK    OK    OK    OK	OK    Y	 OK
-multimedia/xjadeo OK    OK    OK    OK    OK	OK    Y	 OK
+multimedia/xjadeo OK    *     OK    OK    OK	OK    Y	 OK
+
+   xjadeo: configure error on amd64
 ```
 
 
