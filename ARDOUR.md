@@ -38,7 +38,8 @@ textproc/sratom-0 OK    OK    OK    OK    OK	OK    Y	 OK
 multimedia/harvid OK    OK    OK    OK    OK	OK    Y	 OK
 multimedia/xjadeo OK    *     OK    OK    OK	OK    Y	 OK
 
-   xjadeo: configure error on amd64
+   xjadeo: configure error on amd64 - not found libXv (-lXv), but it is installed and complains
+   about x11/libX11 not found, but it is installed.
 ```
 
 
