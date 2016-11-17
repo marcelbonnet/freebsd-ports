@@ -1,8 +1,11 @@
 # FreeBSD Ports
 
-For functional ports, check the releases/tags named _-STABLE_ or _-RELEASE_ .
+Functional ports are tagged:
 
-I am experiencing problems to download/fetch the distfiles/tags: they are all empty zip/tar.gz files. Until we have a solution, clone the repo and make the distfile: ```cd [repo_path] && tar --exclude .git -cjf $destdir/$distfile .``` 
+```[port]-[version]_[revision]``` or
+
+```[port]-[version]_[revision]-[PR Number]_[PR revision]``` when a PR exists to submit the port(s).
+
 
 ## My Functional Ports
 

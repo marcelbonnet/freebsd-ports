@@ -29,23 +29,23 @@ My goal is:
 Port Name	  CNF	BLD   INS   RUN	  FMT	TEST  PR DIS   TAG
 -------------------------------------------------------------------------------
 audio/ardour5	  OK	OK    OK    OK	  OK	OK    Y	 OK     5.3
-audio/lilv-0	  OK	OK    OK    OK	  OK	
-audio/lv2	  OK    OK    OK    OK    OK
+audio/lilv-0	  OK	OK    OK    OK	  OK	OK    Y	 OK
+audio/lv2	  OK    OK    OK    OK    OK	OK    Y	 OK
 audio/suil-0	  OK    OK    OK    OK    OK	OK    Y	 OK
 textproc/serd-0	  OK    OK    OK    OK    OK	OK    Y	 OK
 textproc/sord-0	  OK    OK    OK    OK    OK	OK    Y	 OK
 textproc/sratom-0 OK    OK    OK    OK    OK	OK    Y	 OK
 multimedia/harvid OK    OK    OK    OK    OK	OK    Y	 OK
-multimedia/xjadeo OK    *     OK    OK    OK	OK    Y	 OK
+multimedia/xjadeo OK    OK    OK    OK    OK	OK    Y	 OK
 
-   xjadeo: configure error on amd64 - not found libXv (-lXv), but it is installed and complains
-   about x11/libX11 not found, but it is installed.
+   xjadeo build: configure error on 11-RELEASE amd64 - not found libXv (-lXv), but it is installed and complains
+   about x11/libX11 not found, but it is installed... removing thoses tests from gnu configure solved (this patch is not included in port) 
 ```
 
 
 The PR should be submitted after all ports are tested. I'll make a one and only PR.
 
-### Manual Installation:
+### Manual Installation (not needed when Ardour port exists for the version you want):
 
 After run ```make``` , it will break during stage. After that:
 

@@ -9,3 +9,5 @@ lib/liblilv-0.so
 lib/liblilv-0.so.0
 lib/liblilv-0.so.0.16.0
 libdata/pkgconfig/lilv-0.pc
+man/man1/lv2info.1.gz
+man/man1/lv2ls.1.gz
